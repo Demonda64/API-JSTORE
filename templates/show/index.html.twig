@@ -1,11 +1,12 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-
+<div class="">
+    <h1 class="title p-1">{{article.title}}</h1> 
 
 
     <div class="container">
-    <h1 class="title p-1">{{article.title}}</h1> 
+
         <div class="img-fluid">
             <img width="100%" src="/blog/images/{{ article.image }}" alt="{{article.title}}"/>
         </div>
@@ -19,6 +20,6 @@
         {{ article.content | raw}}
         </p>
         </div>
+    </div>
 </div>
-
 {% endblock %}

@@ -14,17 +14,20 @@ class HomeController extends AbstractController
 {
     private $repoArticle;
 
-    public function __construct(ArticleRepository $repoArticle)
+    private $repoCategory;
+
+    public function __construct(ArticleRepository $repoArticle,CategoryRepository $repoCategory)
     {
         $this->repoArticle = $repoArticle;
+        $this->repoCategory = $repoCategory;
     }
 
     /**
      * @Route("/home", name="home")
      */
-    public function index(CategoryRepository $repoCategory): Response
+    public function index(): Response
     {
-        $categories =$repoCategory->findAll();
+        $categories =$this->repoCategory->findAll();
         //dd($categories);
         $articles = $this->repoArticle->findAll();
         return $this->render("home/index.html.twig",[
@@ -54,13 +57,18 @@ class HomeController extends AbstractController
     /**
      * @Route("/showArticles/{id}", name="show_article")
      */
-    public function showArticle(Category $category): Response
+    public function showArticle(?Category $category): Response
     {
-
+        if ($category) {
+            $articles = $category->getArticles()->getValues();   
+        }else{
+        return $this->redirectToRoute('home');
+        }
         
-
-        return $this->render("show/showArticle.html.twig",[
-            
+        $categories =$this->repoCategory->findAll();
+        return $this->render("home/index.html.twig",[
+            'articles'=> $articles,
+            'categories'=>$categories,
         ]);
     }
 }
