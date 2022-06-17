@@ -3,46 +3,64 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Category;
+use App\Repository\ArticleRepository;
+use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
+    private $repoArticle;
+
+    public function __construct(ArticleRepository $repoArticle)
+    {
+        $this->repoArticle = $repoArticle;
+    }
+
     /**
      * @Route("/home", name="home")
      */
-    public function index(): Response
+    public function index(CategoryRepository $repoCategory): Response
     {
-        $repo = $this->getDoctrine()->getRepository(Article::class);
-
-        $articles = $repo->findAll();
-
-        
-
+        $categories =$repoCategory->findAll();
+        //dd($categories);
+        $articles = $this->repoArticle->findAll();
         return $this->render("home/index.html.twig",[
             'articles'=> $articles,
+            'categories'=>$categories,
         ]);
     }
-
-     /**
+    /**
      * @Route("/show/{id}", name="show")
      */
-    public function show($id): Response
+    public function show(Article $article): Response
     {
-        $repo = $this->getDoctrine()->getRepository(Article::class);
 
-        $article = $repo->find($id);
 
-          if(!$article){
-              return $this->redirectToRoute('home');
-         }
+        if(!$article){
+            return $this->redirectToRoute('home');
+        }
             
 
         
 
         return $this->render("show/index.html.twig",[
             'article'=> $article,
+        ]);
+    }
+
+    /**
+     * @Route("/showArticles/{id}", name="show_article")
+     */
+    public function showArticle(Category $category): Response
+    {
+
+        
+
+        return $this->render("show/showArticle.html.twig",[
+            
         ]);
     }
 }
