@@ -70,7 +70,7 @@ class User
 
     public function getPasswordConfirm(): ?string
     {
-        return $this->PasswordConfirm;
+        return $this->passwordConfirm;
     }
 
     public function setPasswordConfirm(string $passwordConfirm): self
