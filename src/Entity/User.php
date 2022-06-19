@@ -7,13 +7,16 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+//use Symfony\Component\Security\Core\User;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  */
-class User
+class User implements UserInterface , PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id
@@ -23,12 +26,13 @@ class User
     private $id;
 
     /**
+     * @Assert\Length(min = 5,max = 50)
      * @ORM\Column(type="string", length=255)
      */
     private $username;
 
     /**
-     * @Assert\Length(min = 2,max = 50)
+     * @Assert\Length(min = 5,max = 50)
      * @ORM\Column(type="string", length=255)
      */
     private $lastname;
@@ -122,8 +126,8 @@ private $password;
 
         return $this;
     }
-
-    public function getPassword(): ?string
+    
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -175,5 +179,20 @@ private $password;
         }
 
         return $this;
+    }
+
+    public function getRoles(){
+        return['ROLE_USER'];
+    }
+
+    public function getSalt()
+    {
+        //return null;
+    }
+
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }
