@@ -4,7 +4,20 @@
 
 <div class="container">
     <h1 class="text-center">Connexion</h1>
-</div>
+    <form action="" method="POST">
+        <div class="mb-3">
+            <label for="email" class="form-label">Votre email:</label>
+            <input type="email" class="form-control" id="email" aria-description="emailHelp" name="_username">
+        </div>
+    
+    <div class="mb-3">
+        <label for="password" class="form-label">Votre mot de passe:</label>
+        <input type="password" class="form-control" id="password" name="_password">
+    </div>
 
+    <button type="submit" class="btn btn-outline-primary">Se connecter ✅</button>
+
+    </form>
+</div>
 
 {% endblock %}

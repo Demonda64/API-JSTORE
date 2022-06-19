@@ -12,6 +12,10 @@
     
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
+  <a class="navbar-brand" href="/">Blog</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <div class="collapse navbar-collapse" id="navbarColor03">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
@@ -23,8 +27,28 @@
         </li>
       </ul>
 
-      <a href="{{ path('app_security_register')}}" class="btn btn-success">Inscription</a>
+      {% if app.user %}
 
+      {# <a href="{{ path('security_logout')}}" class="btn btn-outline-success">{{app.user}}</a> #}
+
+      
+<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+  <button type="button" class="btn btn-primary">{{app.user}}</button>
+  <div class="btn-group" role="group">
+    <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle show" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></button>
+    <div class="dropdown-menu show" aria-labelledby="btnGroupDrop1" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 58px);" data-popper-placement="bottom-start">
+      <a class="dropdown-item" href="#">Dropdown link</a>
+      <a class="dropdown-item" href="{{ path('security_logout')}}">Déconnexion</a>
+    </div>
+  </div>
+</div>
+
+      {% else %}
+
+      <a href="{{ path('app_security_register')}}" class="btn btn-outline-success">Inscription</a>
+      <a href="{{ path('security_login')}}" class="btn btn-outline-success">Connexion</a>
+      
+      {% endif %}
     </div>
   </div>
 </nav>
