@@ -16,7 +16,7 @@ class RegisterType extends AbstractType
             ->add('username')
             ->add('lastname')
             ->add('email')
-            ->add('password', PasswordType::class) //Cacher MDP
+            ->add('password', PasswordType::class) 
             ->add('passwordConfirm', PasswordType::class)
         ;
     }

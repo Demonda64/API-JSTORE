@@ -6,6 +6,8 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -26,19 +28,22 @@ class User
     private $username;
 
     /**
+     * @Assert\Length(min = 2,max = 50)
      * @ORM\Column(type="string", length=255)
      */
     private $lastname;
 
     /**
+     * @Assert\Email(message = "L'email '{{ value }}' n'est pas un mail valide.")
      * @ORM\Column(type="string", length=255)
      */
     private $email;
 
     /**
+     * @Assert\Length(min = 4,max = 50)
      * @ORM\Column(type="string", length=255)
      */
-    private $password;
+private $password;
 
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -50,6 +55,9 @@ class User
      */
     private $articles;
 
+    /**
+     * @Assert\EqualTo(propertyPath="password", message = "Les 2 mots de passe sont différents")
+     */
     private $passwordConfirm;
 
     public function __construct()
@@ -76,6 +84,8 @@ class User
     public function setPasswordConfirm(string $passwordConfirm): self
     {
         $this->passwordConfirm = $passwordConfirm;
+
+        return $this;
     }
 
     public function __toString(){
